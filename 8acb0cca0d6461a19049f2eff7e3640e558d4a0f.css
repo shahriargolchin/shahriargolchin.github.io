@@ -271,8 +271,8 @@ td, th {
     color: #fff
     }
 .notion-dark-theme .notion-citation-mention-token {
-    background-color: #787774;
-    color: #2f2f2f
+    background-color: #333;
+    color: #fff
     }
 .notion-citation-mention-token.notion-enable-hover:hover {
     background-color: #2383e2
@@ -1146,6 +1146,12 @@ body.dark .layout-content-with-divider {
     font-size: 20px;
     font-weight: 600;
     line-height: 150%
+    }
+.tx-uititle-medium-20-semibold {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 590;
+    line-height: 25px
     }
 .tx-title-22-bold {
     font-weight: 700;
