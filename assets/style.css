@@ -83,7 +83,3 @@ a:hover {
           color: #111;
           text-decoration: underline;
     } */
-
-html, body { background: #ffffff !important; }
-
-header, main, section, .container, .content { background: transparent !important; }
