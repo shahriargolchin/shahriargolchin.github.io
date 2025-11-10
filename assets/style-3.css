@@ -1,7 +1,3 @@
-html, body {
-    background-color: #ffffff;
-}
-
 .instilogo {
     height: 50px;
     filter: grayscale(20%);
@@ -41,16 +37,8 @@ a:hover {
     border-left: 1px solid #ddd;
 }
 
-.menulink {
-    font-size: 12px;  /* Base font size */
-    display: block;
-    padding: 8px 0;
-    transition: all 0.3s ease;
-}
-
 .menulink:hover {
     color: #111;
-    transform: translateX(5px);  /* Slight shift on hover */
 }
 
 .profilepic {
