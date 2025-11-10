@@ -53,6 +53,13 @@
 
       /* Mobile responsive styles */
       @media only screen and (max-width: 900px) {
+        /* ensure the document can grow and scroll normally on small devices */
+        html, body {
+          height: auto !important;
+          min-height: auto !important;
+          overflow-y: auto !important;
+        }
+
         .allstuff {
           padding-top: 0px !important;
         }
@@ -68,9 +75,14 @@
           padding-bottom: 0px !important;
         }
 
+        /* remove any fixed positioning on the sidebar at mobile sizes so content flows */
         .fixed-posi {
-          position: relative !important;
+          position: static !important;
           text-align: center;
+          width: 100% !important;
+          left: auto !important;
+          right: auto !important;
+          top: auto !important;
         }
 
         .name {
@@ -87,7 +99,7 @@
         }
       }
 
-      /* Desktop styles */
+      /* Desktop styles (keep sidebar fixed only on larger screens) */
       @media (min-width: 901px) {
         .fixed-posi {
           position: fixed;
