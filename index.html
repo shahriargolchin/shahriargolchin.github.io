@@ -24,16 +24,22 @@
         font-family: 'IBM Plex Sans', sans-serif;
       }
 
-      a[href], 
-      .menulink,
+      /* Regular links, not including social media */
+      a[href]:not(.menulink),
       .in-text,
       .tag {
         color: #AB0520 !important;
         text-decoration: none !important;
       }
 
-      a[href]:hover,
-      .menulink:hover,
+      /* Section titles and paper titles */
+      .header,
+      .papertitle {
+        color: #AB0520 !important;
+      }
+
+      /* Hover states for links */
+      a[href]:not(.menulink):hover,
       .in-text:hover,
       .tag:hover {
         color: #AB0520 !important;
