@@ -26,8 +26,10 @@
         font-family: 'Figtree', sans-serif;
       }
 
+      /* Generous bottom padding so the last sections can scroll high enough
+         into the viewport for the sidebar nav highlight to reach them */
       .allstuffp {
-        padding-bottom: 5rem !important;
+        padding-bottom: 23vh !important;
       }
 
       /* Regular links, not including social media */
@@ -117,6 +119,145 @@
         }
       }
       /* (removed SVG spotlight styling; replaced with a simple emoji badge in the content) */
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      #about,
+      #publications,
+      #blog-posts,
+      #service {
+        scroll-margin-top: 24px;
+      }
+
+      /* Sidebar section nav */
+      .sidebar-nav {
+        margin-top: 1.5rem;
+      }
+
+      .sidebar-nav a.navlink {
+        display: block;
+        color: #666 !important;
+        text-decoration: none !important;
+        padding: 3px 0;
+        font-size: 0.95em;
+        transition: color 0.2s ease;
+      }
+
+      .sidebar-nav a.navlink:hover,
+      .sidebar-nav a.navlink.active {
+        color: #AB0520 !important;
+      }
+
+      .sidebar-nav a.navlink.active {
+        font-weight: 600;
+      }
+
+      /* Expandable abstracts */
+      .abstract-toggle {
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .abstract-toggle .chev {
+        display: inline-block;
+        transition: transform 0.25s ease;
+        font-size: 0.8em;
+      }
+
+      .abstract-toggle.open .chev {
+        transform: rotate(180deg);
+      }
+
+      .abstract {
+        display: block;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        margin-top: 0;
+        font-size: 0.92em;
+        color: #555;
+        transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.3s ease;
+      }
+
+      .abstract.open {
+        max-height: 900px;
+        opacity: 1;
+        margin-top: 8px;
+      }
+
+      /* Link hover preview card */
+      #link-preview {
+        position: fixed;
+        width: 260px;
+        background: #fff;
+        border: 1px solid #e3e3e3;
+        border-radius: 8px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.15s ease;
+        z-index: 1000;
+        pointer-events: none;
+      }
+
+      #link-preview.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      #link-preview .preview-imgwrap {
+        position: relative;
+        width: 100%;
+        height: 150px;
+        background: #f6f6f6;
+      }
+
+      #link-preview .preview-shot {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        object-position: top;
+        display: block;
+        visibility: hidden;
+      }
+
+      #link-preview .preview-imgwrap.loaded .preview-shot {
+        visibility: visible;
+      }
+
+      #link-preview .preview-loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85em;
+        color: #999;
+      }
+
+      #link-preview .preview-imgwrap.loaded .preview-loading {
+        display: none;
+      }
+
+      #link-preview .preview-meta {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 10px;
+        font-size: 0.85em;
+        color: #555;
+      }
+
+      #link-preview .preview-favicon {
+        width: 16px;
+        height: 16px;
+      }
     </style>
       
           
@@ -136,14 +277,21 @@
                 <div class="my-2"><a class="menulink" target="_blank" href="https://www.linkedin.com/in/shahriar-golchin/"><i class="fa-brands fa-linkedin-in" style="color: #000000;"></i> LinkedIn</a></div>
                 <div class="my-2"><a class="menulink" target="_blank" href="https://twitter.com/ShahriarGolchin">𝕏 X</a></div>
 
-                
+                <div class="sidebar-nav">
+                    <a class="navlink" href="#about">About</a>
+                    <a class="navlink" href="#publications">Publications</a>
+                    <a class="navlink" href="#blog-posts">Blog Posts</a>
+                    <a class="navlink" href="#service">Service</a>
+                </div>
+
+
 
                 <!-- <div class="pt-5">usercontext</div> -->
                 <!-- <div class="">travel history</div> -->
                 <!-- <div class="">this template</div> -->
                 </div>
             </div>
-            <div class="col-md-8 pt-5 about">
+            <div class="col-md-8 pt-5 about" id="about">
                  I am an AI Researcher at <strong>Labelbox</strong>, working on model evaluation and AI safety. <br><br>
 
                  I earned my PhD in Computer Science – Artificial Intelligence from the University of Arizona, advised by Prof. <a href="https://surdeanu.cs.arizona.edu/mihai/" target="_blank">Mihai Surdeanu</a>. My research interests center on Large Language Models (LLMs), focusing on designing datasets/tasks that adversarially stress-test alignment. I am particularly interested in surfacing systematic misalignment and reasoning failure modes across frontier AI models. <br><br>
@@ -152,7 +300,7 @@
 
                  Previously, I was a research intern at <strong>Google Cloud AI Research</strong>, <strong>Walmart Global Tech</strong>, and <strong>Harvard Medical School</strong>. <br><br>
 
-                 <p class="header pt-5">Selected Publications</p>
+                 <p class="header pt-5" id="publications">Selected Publications</p>
                  <div class="py-2">
                  <p class="paper my-2 pl-2">
                      <span class="papertitle"><strong>Intent Laundering: AI Safety Datasets Are Not What They Seem</strong></span><br>
@@ -161,8 +309,8 @@
                      <a class="tag" href="https://labelbox.com/blog/the-ai-safety-illusion-why-current-safety-datasets-fool-us-on-model-safety/" target="_blank">Blog Post</a><span class="tagsep">|</span>
                      <a class="tag" href="https://www.unite.ai/easy-rewording-breaks-ai-safety-even-for-gemini-and-claude/" target="_blank">Media Coverage</a><span class="tagsep">|</span>
                      <a class="tag" href="https://cobusgreyling.medium.com/intent-laundering-2cabaa451d97" target="_blank">Medium Post</a><span class="tagsep">|</span>
-                     <a class="tag" href="https://www.youtube.com/watch?v=qjzF-7tZjlA" target="_blank">YouTube</a><span class="tagsep">|</span>
-                     <a class="tag" href="https://x.com/heynavtoor/status/2033997040737521799?s=20" target="_blank">X Thread</a>
+                     <a class="tag abstract-toggle" role="button" tabindex="0" aria-expanded="false">Abstract <span class="chev">▾</span></a>
+                     <span class="abstract">We systematically evaluate the quality of widely used adversarial safety datasets from two perspectives: in isolation and in practice. In isolation, we examine how well these datasets reflect real-world adversarial attacks based on three defining properties: being driven by ulterior intent, well-crafted, and out-of-distribution. We find that these datasets overrely on "triggering cues": words or phrases with overt negative/sensitive connotations that are intended to trigger safety mechanisms explicitly, which is unrealistic compared to real-world attacks. In practice, we evaluate whether these datasets genuinely measure safety risks or merely provoke refusals through triggering cues. To explore this, we introduce "intent laundering": a procedure that abstracts away triggering cues from adversarial attacks (data points) while strictly preserving their malicious intent and all relevant details. Our results show that current adversarial safety datasets fail to faithfully represent real-world adversarial behavior due to their overreliance on triggering cues. Once these cues are removed, all previously evaluated "reasonably safe" models become unsafe, including Gemini 3 Pro and Claude Sonnet 3.7/4. Moreover, when intent laundering is adapted as a jailbreaking technique, it consistently achieves high attack success rates, ranging from 90.00% to 100.00%, under fully black-box access. Overall, our findings expose a significant disconnect between how existing datasets evaluate model safety and how real-world adversaries behave.</span>
                  </p>
                  </div>
                  <div class="py-2">
@@ -170,14 +318,18 @@
                      <span class="papertitle"><strong>Towards Compute-Optimal Many-Shot In-Context Learning</strong></span><br>
                      <span class="thisauthor">Shahriar Golchin</span>, Yanfei Chen, Rujun Han, Manan Gandhi, Tianli Yu, Swaroop Mishra, Mihai Surdeanu, Rishabh Agarwal, Chen-Yu Lee, Tomas Pfister<br>
                      <strong>COLM 2025</strong> | <a class="tag" href="https://arxiv.org/pdf/2507.16217" target="_blank">Paper</a><span class="tagsep">|</span>
-                     <a class="tag" href="https://drive.google.com/file/d/1WxuPWKT6EAgeH554j4AvxOWcs1vPLxNf/view?usp=drive_link" target="_blank">Poster</a>
+                     <a class="tag" href="https://drive.google.com/file/d/1WxuPWKT6EAgeH554j4AvxOWcs1vPLxNf/view?usp=drive_link" target="_blank">Poster</a><span class="tagsep">|</span>
+                     <a class="tag abstract-toggle" role="button" tabindex="0" aria-expanded="false">Abstract <span class="chev">▾</span></a>
+                     <span class="abstract">Long-context large language models (LLMs) are able to process inputs containing up to several million tokens. In the scope of in-context learning (ICL), this translates into using hundreds/thousands of demonstrations in the input prompt, enabling many-shot ICL. In practice, a fixed set of demonstrations is often selected at random in many-shot settings due to (1) high inference costs, (2) the benefits of caching and reusing computations, and (3) the similar performance offered by this strategy compared to others when scaled. In this work, we propose two straightforward strategies for demonstration selection in many-shot ICL that improve performance with minimal computational overhead. Our first method combines a small number of demonstrations, selected based on their similarity to each test sample, with a disproportionately larger set of random demonstrations that are cached. The second strategy improves the first by replacing random demonstrations with those selected using centroids derived from test sample representations via k-means clustering. Our experiments with Gemini Pro and Flash across several datasets indicate that our strategies consistently outperform random selection and surpass or match the most performant selection approach while supporting caching and reducing inference cost by up to an order of magnitude. We also show that adjusting the proportion of demonstrations selected based on different criteria can balance performance and inference cost in many-shot ICL.</span>
                  </p>
                  </div>
                  <div class="py-2">
                  <p class="paper my-2 pl-2">
                      <span class="papertitle"><strong>Memorization in In-Context Learning</strong></span><br>
                      <span class="thisauthor">Shahriar Golchin</span>, Mihai Surdeanu, Steven Bethard, Eduardo Blanco, Ellen Riloff<br>
-                     <strong>arXiv 2025</strong> | <a class="tag" href="https://arxiv.org/abs/2408.11546" target="_blank">Paper</a>
+                     <strong>arXiv 2025</strong> | <a class="tag" href="https://arxiv.org/abs/2408.11546" target="_blank">Paper</a><span class="tagsep">|</span>
+                     <a class="tag abstract-toggle" role="button" tabindex="0" aria-expanded="false">Abstract <span class="chev">▾</span></a>
+                     <span class="abstract">In-context learning (ICL) has proven to be an effective strategy for improving the performance of large language models (LLMs) with no additional training. However, the exact mechanism behind this performance improvement remains unclear. This study is the first to show how ICL surfaces memorized training data and to explore the correlation between this memorization and performance on downstream tasks across various ICL regimes: zero-shot, few-shot, and many-shot. Our most notable findings include: (1) ICL significantly surfaces memorization compared to zero-shot learning in most cases; (2) demonstrations, without their labels, are the most effective element in surfacing memorization; (3) ICL improves performance when the surfaced memorization in few-shot regimes reaches a high level (about 40%); and (4) there is a very strong correlation between performance and memorization in ICL when it outperforms zero-shot learning. Overall, our study uncovers memorization as a new factor impacting ICL, raising an important question: to what extent do LLMs truly generalize from demonstrations in ICL, and how much of their success is due to memorization?</span>
                  </p>
                  </div>
                  <div class="py-2">
@@ -187,14 +339,18 @@
                      <strong>TACL/ACL 2025</strong> | <a class="tag" href="https://direct.mit.edu/tacl/article/doi/10.1162/TACL.a.20/132117" target="_blank">Paper</a><span class="tagsep">|</span>
                      <a class="tag" href="https://drive.google.com/file/d/1HyG8dTzwHxTwDGcr5yoGXVGbVdpSsejq/view?usp=drive_link" target="_blank">Poster</a><span class="tagsep">|</span>
                      <a class="tag" href="https://drive.google.com/file/d/1SQKsddbg7eVhKyjOMxptQLR0o_AAd-tT/view" target="_blank">Video</a><span class="tagsep">|</span>
-                     <a class="tag" href="https://thenewstack.io/how-to-detect-and-clean-up-data-contamination-in-llms/" target="_blank">Media Coverage</a>
+                     <a class="tag" href="https://thenewstack.io/how-to-detect-and-clean-up-data-contamination-in-llms/" target="_blank">Media Coverage</a><span class="tagsep">|</span>
+                     <a class="tag abstract-toggle" role="button" tabindex="0" aria-expanded="false">Abstract <span class="chev">▾</span></a>
+                     <span class="abstract">We propose the Data Contamination Quiz (DCQ), a simple and effective approach to detect data contamination in large language models (LLMs) and estimate the amount of it. Specifically, we frame data contamination detection as a series of multiple-choice questions, devising a quiz format wherein three perturbed versions of each instance, subsampled from a specific dataset partition, are created. These changes only include word-level perturbations. The generated perturbations, along with the original dataset instance, form the options in the DCQ, with an extra option accommodating the selection of none of the provided options. Given that the only distinguishing signal among the options is the exact wording with respect to the original dataset instance, an LLM, when tasked with identifying the original dataset instance, gravitates towards selecting the original one if it has been exposed to it. While accounting for positional biases in LLMs, the quiz performance reveals the contamination level for the tested model with the dataset partition to which the quiz pertains. Applied to various datasets and LLMs, under controlled and uncontrolled contamination, our findings, while fully lacking access to training data and model parameters, suggest that DCQ achieves state-of-the-art results and uncovers greater contamination levels through memorization compared to existing methods. Also, it proficiently bypasses more safety filters, especially those set to avoid generating copyrighted content.</span>
                  </p>
                  </div>
                  <div class="py-2">
                  <p class="paper my-2 pl-2">
                      <span class="papertitle"><strong>Grading Massive Open Online Courses Using Large Language Models</strong></span><br>
                      <span class="thisauthor">Shahriar Golchin</span>, Nikhil Garuda, Christopher Impey, Matthew Wenger<br>
-                     <strong>COLING 2025</strong> | <a class="tag" href="https://arxiv.org/abs/2406.11102" target="_blank">Paper</a>
+                     <strong>COLING 2025</strong> | <a class="tag" href="https://arxiv.org/abs/2406.11102" target="_blank">Paper</a><span class="tagsep">|</span>
+                     <a class="tag abstract-toggle" role="button" tabindex="0" aria-expanded="false">Abstract <span class="chev">▾</span></a>
+                     <span class="abstract">Massive open online courses (MOOCs) offer free education globally. Despite this democratization of learning, the massive enrollment in these courses makes it impractical for an instructor to assess every student's writing assignment. As a result, peer grading, often guided by a straightforward rubric, is the method of choice. While convenient, peer grading often falls short in terms of reliability and validity. In this study, we explore the feasibility of using large language models (LLMs) to replace peer grading in MOOCs. To this end, we adapt the zero-shot chain-of-thought (ZCoT) prompting technique to automate the feedback process once the LLM assigns a score to an assignment. Specifically, to instruct LLMs for grading, we use three distinct prompts based on ZCoT: (1) ZCoT with instructor-provided correct answers, (2) ZCoT with both instructor-provided correct answers and rubrics, and (3) ZCoT with instructor-provided correct answers and LLM-generated rubrics. We tested these prompts in 18 different scenarios using two LLMs, GPT-4 and GPT-3.5, across three MOOCs: Introductory Astronomy, Astrobiology, and the History and Philosophy of Astronomy. Our results show that ZCoT, when augmented with instructor-provided correct answers and rubrics, produces grades that are more aligned with those assigned by instructors compared to peer grading. Finally, our findings indicate a promising potential for automated grading systems in MOOCs, especially in subjects with well-defined rubrics, to improve the learning experience for millions of online learners worldwide.</span>
                  </p>
                  </div>
                  <div class="py-2">
@@ -205,7 +361,9 @@
                      | <a class="tag" href="https://openreview.net/forum?id=2Rwq6c3tvr" target="_blank" aria-label="Open review link">Paper</a><span class="tagsep">|</span>
                      <a class="tag" href="https://iclr.cc/media/PosterPDFs/ICLR%202024/19550.png?t=1714614786.3643699" target="_blank">Poster</a><span class="tagsep">|</span>
                      <a class="tag" href="https://iclr.cc/virtual/2024/poster/19550" target="_blank">Video</a><span class="tagsep">|</span>
-                     <a class="tag" href="https://thenewstack.io/how-to-detect-and-clean-up-data-contamination-in-llms/" target="_blank">Media Coverage</a>
+                     <a class="tag" href="https://thenewstack.io/how-to-detect-and-clean-up-data-contamination-in-llms/" target="_blank">Media Coverage</a><span class="tagsep">|</span>
+                     <a class="tag abstract-toggle" role="button" tabindex="0" aria-expanded="false">Abstract <span class="chev">▾</span></a>
+                     <span class="abstract">Data contamination, i.e., the presence of test data from downstream tasks in the training data of large language models (LLMs), is a potential major issue in measuring LLMs' real effectiveness on other tasks. We propose a straightforward yet effective method for identifying data contamination within LLMs. At its core, our approach starts by identifying potential contamination at the instance level; using this information, our approach then assesses wider contamination at the partition level. To estimate contamination of individual instances, we employ "guided instruction:" a prompt consisting of the dataset name, partition type, and the random-length initial segment of a reference instance, asking the LLM to complete it. An instance is flagged as contaminated if the LLM's output either exactly or nearly matches the latter segment of the reference. To understand if an entire partition is contaminated, we propose two ideas. The first idea marks a dataset partition as contaminated if the average overlap score with the reference instances (as measured by ROUGE-L or BLEURT) is statistically significantly better with the completions from guided instruction compared to a "general instruction" that does not include the dataset and partition name. The second idea marks a dataset partition as contaminated if a classifier based on GPT-4 with few-shot in-context learning prompt marks multiple generated completions as exact/near-exact matches of the corresponding reference instances. Our best method achieves an accuracy between 92% and 100% in detecting if an LLM is contaminated with seven datasets, containing train and test/validation partitions, when contrasted with manual evaluation by human experts. Further, our findings indicate that GPT-4 is contaminated with AG News, WNLI, and XSum datasets.</span>
                  </p>
                  </div>
                  <div class="py-2">
@@ -213,41 +371,54 @@
                      <span class="papertitle"><strong>Do not Mask Randomly: Effective Domain-Adaptive Pretraining by Masking In-Domain Keywords</strong></span><br>
                      <span class="thisauthor">Shahriar Golchin</span>, Mihai Surdeanu, Nazgol Tavabi, Ata Kiapour<br>
                      <strong>ACL 2023 RepL4NLP</strong> | <a class="tag" href="https://arxiv.org/abs/2307.07160" target="_blank">Paper</a><span class="tagsep">|</span>
-                     <a class="tag" href="https://underline.io/lecture/78829-do-not-mask-randomly-effective-domain-adaptive-pre-training-by-masking-in-domain-keywords" target="_blank">Poster</a>
+                     <a class="tag" href="https://underline.io/lecture/78829-do-not-mask-randomly-effective-domain-adaptive-pre-training-by-masking-in-domain-keywords" target="_blank">Poster</a><span class="tagsep">|</span>
+                     <a class="tag abstract-toggle" role="button" tabindex="0" aria-expanded="false">Abstract <span class="chev">▾</span></a>
+                     <span class="abstract">We propose a novel task-agnostic in-domain pre-training method that sits between generic pre-training and fine-tuning. Our approach selectively masks in-domain keywords, i.e., words that provide a compact representation of the target domain. We identify such keywords using KeyBERT (Grootendorst, 2020). We evaluate our approach using six different settings: three datasets combined with two distinct pre-trained language models (PLMs). Our results reveal that the fine-tuned PLMs adapted using our in-domain pre-training strategy outperform PLMs that used in-domain pre-training with random masking as well as those that followed the common pre-train-then-fine-tune paradigm. Further, the overhead of identifying in-domain keywords is reasonable, e.g., 7-15% of the pre-training time (for two epochs) for BERT Large (Devlin et al., 2019).</span>
                  </p>
                  </div>
                  <div class="py-2">
                  <p class="paper my-2 pl-2">
                      <span class="papertitle"><strong>A Natural Language Processing Pipeline to Study Disparities in Cannabis Use and Documentation Among Children and Young Adults: A Survey of 21 Years of Electronic Health Records</strong></span><br>
                      Nazgol Tavabi, Marium Raza, Mallika Singh, <span class="thisauthor">Shahriar Golchin</span>, Harsev Singh, Grant Hogue, Ata Kiapour<br>
-                     <strong>Nature Digital Medicine</strong> | <a class="tag" href="https://www.nature.com/articles/s41746-023-00885-w" target="_blank">Paper</a>
+                     <strong>Nature Digital Medicine</strong> | <a class="tag" href="https://www.nature.com/articles/s41746-023-00885-w" target="_blank">Paper</a><span class="tagsep">|</span>
+                     <a class="tag abstract-toggle" role="button" tabindex="0" aria-expanded="false">Abstract <span class="chev">▾</span></a>
+                     <span class="abstract">The legalizations of medical and recreational cannabis have generated a great deal of interest in studying the health impacts of cannabis products. Despite increases in cannabis use, its documentation during clinical visits is not yet mainstream. This lack of information hampers efforts to study cannabis's effects on health outcomes. A clear and in-depth understanding of current trends in cannabis use documentation is necessary to develop proper guidelines to screen and document cannabis use. Here we have developed and used a natural language processing pipeline to evaluate the trends and disparities in cannabis documentation. The pipeline includes a screening step to identify clinical notes with cannabis use documentation which is then fed into a BERT-based classifier to confirm positive use. This pipeline is applied to more than 23 million notes from a large cohort of 370,087 patients seen in a high-volume multi-site pediatric and young adult clinic over a period of 21 years. Our findings show a very low but growing rate of cannabis use documentation (&lt;2%) in electronic health records with significant demographic and socioeconomic disparities in both documentation and positive use, which requires further attention.</span>
                  </p>
                  </div>
                  <div class="py-2">
                  <p class="paper my-2 pl-2">
                      <span class="papertitle"><strong>Building Large-Scale Registries from Unstructured Clinical Notes Using a Low-Resource Natural Language Processing Pipeline</strong></span><br>
                      Nazgol Tavabi, James Pruneski, <span class="thisauthor">Shahriar Golchin</span>, Mallika Singh, Ryan Sanborn, Benton Heyworth, Amir Kimia, Ata Kiapour<br>
-                     <strong>Artificial Intelligence in Medicine</strong> | <a class="tag" href="https://www.sciencedirect.com/science/article/pii/S0933365724000897" target="_blank">Paper</a>
+                     <strong>Artificial Intelligence in Medicine</strong> | <a class="tag" href="https://www.sciencedirect.com/science/article/pii/S0933365724000897" target="_blank">Paper</a><span class="tagsep">|</span>
+                     <a class="tag abstract-toggle" role="button" tabindex="0" aria-expanded="false">Abstract <span class="chev">▾</span></a>
+                     <span class="abstract">Building clinical registries is an important step in improving the quality and safety of patient care. With the growing size of medical records, manual abstraction becomes more and more infeasible and impractical. On the other hand, Natural Language Processing Techniques have shown promising results in extracting valuable information from unstructured clinical notes. However, the structure and nature of clinical notes are very different from regular text that state-of-the-art NLP models are trained and tested on and they have their own set of challenges. In this study, we propose SE-K, an efficient and interpretable classification approach for extracting information from clinical notes, and show that it outperforms current state-of-the-art models in text classification. We use this approach to generate a 20-year comprehensive registry of anterior cruciate ligament reconstruction operations, one of the most common orthopedics operations among children and young adults. This registry can help us better understand the outcomes of this surgery and identify potential areas for improvement which can ultimately lead to better treatment outcomes.</span>
                  </p>
                  </div>
 
-                 <p class="header pt-5">Blog Posts</p>
+                 <p class="header pt-5" id="blog-posts">Blog Posts</p>
+                 <div class="py-2">
+                 <p class="paper my-2 pl-2">
+                     <span class="papertitle"><strong>Do AI Models Want to Be Watched? Measuring Monitorability Disposition in Large Reasoning Models</strong></span><br>
+                     <span class="thisauthor">Shahriar Golchin</span><br>
+                     <strong>Labelbox Research Blog</strong> | <a class="tag" href="https://labelbox.com/blog/do-ai-models-want-to-be-watched-measuring-monitorability-disposition-in-large-reasoning-models/" target="_blank">Link</a>
+                 </p>
+                 </div>
                  <div class="py-2">
                  <p class="paper my-2 pl-2">
                      <span class="papertitle"><strong>The AI Safety Illusion: Why Current Safety Datasets Fool Us on Model Safety</strong></span><br>
-                     <span class="thisauthor">Shahriar Golchin</span>, Marc Wetter<br>
-                     <strong>Labelbox</strong> | <a class="tag" href="https://labelbox.com/blog/the-ai-safety-illusion-why-current-safety-datasets-fool-us-on-model-safety/" target="_blank">Link</a>
+                     <span class="thisauthor">Shahriar Golchin</span><br>
+                     <strong>Labelbox Research Blog</strong> | <a class="tag" href="https://labelbox.com/blog/the-ai-safety-illusion-why-current-safety-datasets-fool-us-on-model-safety/" target="_blank">Link</a>
                  </p>
                  </div>
                  <div class="py-2">
                  <p class="paper my-2 pl-2">
                      <span class="papertitle"><strong>Reflections on NeurIPS 2025: Advancing Evaluation and Continual Learning in AI</strong></span><br>
                      <span class="thisauthor">Shahriar Golchin</span>, Smit Modi, Stepan Tytarenko, Almas Abdibayev, Marc Wetter<br>
-                     <strong>Labelbox</strong> | <a class="tag" href="https://labelbox.com/blog/reflections-on-neurips-2025-advancing-evaluation-and-continual-learning-in-ai/" target="_blank">Link</a>
+                     <strong>Labelbox Research Blog</strong> | <a class="tag" href="https://labelbox.com/blog/reflections-on-neurips-2025-advancing-evaluation-and-continual-learning-in-ai/" target="_blank">Link</a>
                  </p>
                  </div>
 
-                 <p class="header pt-5">Service to the Field</p>
+                 <p class="header pt-5" id="service">Service to the Field</p>
                  <p class="service"><strong>Area Chair:</strong> COLM 2026</p>
                  <p class="service"><strong>Reviewer:</strong> ICML 2026, AAAI 2026, NeurIPS {2025, 2024}, COLM 2025, ICLR 2025, ACL {2024, 2023}</p>
 
@@ -262,5 +433,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="assets/style-3.js"></script>
+    <script src="assets/interactive.js"></script>
 </body>
 </html>
